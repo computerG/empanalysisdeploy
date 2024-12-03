@@ -30,7 +30,7 @@ cat_column = [
 
 def load_data():
     df_employee = pd.read_excel(
-        "modeldeploy/data/INX_Future_Inc_Employee_Performance_CDS_Project2_Data_V1.8.xls"
+        "data/INX_Future_Inc_Employee_Performance_CDS_Project2_Data_V1.8.xls"
     )
     logging.info("Data loaded successfully.")
     return df_employee  # `df_employee` is a DataFrame variable that is used to store the data loaded from a CSV
@@ -70,6 +70,8 @@ def preprocess_data(df):
 
 def encode_data(df):
     df = preprocess_data(df)
+    if "PerformanceRating" in categorical_columns:
+        categorical_columns.remove("PerformanceRating")
     label_encoders = {col: LabelEncoder() for col in categorical_columns}
     for col in categorical_columns:
         
@@ -78,8 +80,10 @@ def encode_data(df):
        
         df["PerformanceRating"] = rating_encoder.fit_transform(df["PerformanceRating"])
         df['PerformanceRating'] = df['PerformanceRating'].apply(lambda x: x if x in rating_encoder.classes_ else 'L')
-    logging.info("Data encoded successfully.")
-    return df
+        logging.info("Data encoded successfully.")
+        return df
+    else:
+        return df
 
 
 def train_model():
