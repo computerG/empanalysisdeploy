@@ -30,7 +30,7 @@ cat_column = [
 
 def load_data():
     df_employee = pd.read_excel(
-        "data/INX_Future_Inc_Employee_Performance_CDS_Project2_Data_V1.8.xls"
+        "INX_Future_Inc_Employee_Performance_CDS_Project2_Data_V1.8.xls"
     )
     logging.info("Data loaded successfully.")
     return df_employee  # `df_employee` is a DataFrame variable that is used to store the data loaded from a CSV
